@@ -21,4 +21,16 @@ module YuyatBot::TweetHandlerHelper
   def stop_tweet_handler
     raise ::YuyatBot::StopTweetHandlerException
   end
+
+  def reply_message_match(tweet, regexp, &block)
+    if tweet.for_me?
+      matches = remove_header_screen_names(tweet['text']).match regexp
+      yield matches.to_a[1..-1] if matches
+    end
+  end
+
+  private
+  def remove_header_screen_names(text)
+    text.sub(/^(@[a-zA-Z1-9_]* *)/, '')
+  end
 end
