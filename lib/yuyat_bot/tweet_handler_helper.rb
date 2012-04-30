@@ -13,6 +13,6 @@ module YuyatBot::TweetHandlerHelper
 
   def reply_to(tweet, status, options = {})
     options[:in_reply_to_status_id] = tweet['id']
-    tweet(status, options)
+    tweet("@#{tweet['user']['screen_name']} #{status}", options)
   end
 end
