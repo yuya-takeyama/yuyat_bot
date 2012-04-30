@@ -5,11 +5,9 @@ class YuyatBot::TweetHandler::WhatsTime
   include YuyatBot::TweetHandlerHelper
 
   def call(tweet)
-    if tweet.for_me?
-      if tweet['text'] =~ /(いま|今)何時/
-        reply_to tweet, "#{DateTime.now.to_s}"
-        stop_tweet_handler
-      end
+    reply_message_match tweet, /^(いま|今)何時/ do
+      reply_to tweet, "#{DateTime.now.to_s}"
+      stop_tweet_handler
     end
   end
 end
