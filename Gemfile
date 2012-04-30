@@ -1,5 +1,8 @@
 source :rubygems
 
+gem "twitter-stream"
+gem "multi_json"
+
 group :development do
   gem "rspec", "~> 2.8.0"
   gem "guard-rspec"
