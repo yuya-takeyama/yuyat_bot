@@ -10,7 +10,7 @@ module YuyatBot
       tweet = MultiJSON.decode(tweet) if tweet.is_a? String
       if tweet.key? 'text'
         ::YuyatBot::Tweet.new(tweet,
-          for_me: (tweet.key? 'in_replry_to_user_id' and @user_id == tweet['in_replry_to_user_id'])
+          for_me: (tweet.key? 'in_reply_to_user_id' and @user_id == tweet['in_reply_to_user_id'])
         )
       end
     end
