@@ -1,5 +1,6 @@
 source :rubygems
 
+gem "twitter"
 gem "twitter-stream"
 gem "multi_json"
 

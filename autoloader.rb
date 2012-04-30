@@ -6,5 +6,6 @@ module YuyatBot
     autoload :NothingToDo, 'yuyat_bot/tweet_handler/nothing_to_do'
   end
   autoload :TweetHandler, 'yuyat_bot/tweet_handler'
+  autoload :TweetHandlerHelper, 'yuyat_bot/tweet_handler_helper'
 end
 autoload :YuyatBot, 'yuyat_bot'

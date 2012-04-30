@@ -1,6 +1,9 @@
-module YuyatBot::TweetHandler::NothingToDo
+# coding: utf-8
+
+class YuyatBot::TweetHandler::NothingToDo
+  include YuyatBot::TweetHandlerHelper
+
   def call(tweet)
-    p tweet
-    puts "Nothing to Do"
+    reply_to tweet, 'ちょっと何言ってるかわからない'
   end
 end

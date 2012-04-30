@@ -1,4 +1,5 @@
 # coding:utf-8
+require 'twitter'
 require 'twitter/json_stream'
 require 'multi_json'
 
@@ -7,6 +8,14 @@ module YuyatBot
     def initialize(config)
       @config = config
       @handlers = []
+
+      Twitter.configure do |config|
+        config.consumer_key       = @config['oauth']['consumer_key']
+        config.consumer_secret    = @config['oauth']['consumer_secret']
+        config.oauth_token        = @config['oauth']['access_key']
+        config.oauth_token_secret = @config['oauth']['access_secret']
+      end
+      @twitter = Twitter
     end
 
     def configure
@@ -14,7 +23,9 @@ module YuyatBot
     end
 
     def enable!(klass)
-      @handlers.push klass.new
+      handler = klass.new
+      handler.twitter = @twitter
+      @handlers.push handler
     end
 
     def start
