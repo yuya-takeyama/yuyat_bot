@@ -4,4 +4,5 @@ $LOAD_PATH.unshift(File.dirname(__FILE__) + '/../lib')
 require File.expand_path(File.dirname(__FILE__)) + '/../autoloader.rb'
 require 'yaml'
 
-YuyatBot::App.start(YAML.load(open(File.dirname(__FILE__) + '/../config/config.yml').readlines.join('')))
+app = YuyatBot::App.new(YAML.load(open(File.dirname(__FILE__) + '/../config/config.yml').readlines.join('')))
+app.start

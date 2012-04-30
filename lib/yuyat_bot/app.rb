@@ -4,9 +4,24 @@ require 'multi_json'
 
 module YuyatBot
   class App
-    def self.start(config)
+    def initialize(config)
+      @config = config
+      @handlers = []
+    end
+
+    def configure
+      enable! ::YuyatBot::TweetHandler::NothingToDo
+    end
+
+    def enable!(klass)
+      @handlers.push klass.new
+    end
+
+    def start
+      configure
+
       EventMachine::run {
-        tweet_factory = ::YuyatBot::TweetFactory.new(user_id: config['account']['user_id'].to_i)
+        tweet_factory = ::YuyatBot::TweetFactory.new(user_id: @config['account']['user_id'].to_i)
 
         stream = Twitter::JSONStream.connect(
           host:    'userstream.twitter.com',
@@ -14,16 +29,20 @@ module YuyatBot
           method:  'post',
           ssl:     true,
           oauth:   {
-            consumer_key:    config['oauth']['consumer_key'],
-            consumer_secret: config['oauth']['consumer_secret'],
-            access_key:      config['oauth']['access_key'],
-            access_secret:   config['oauth']['access_secret'],
+            consumer_key:    @config['oauth']['consumer_key'],
+            consumer_secret: @config['oauth']['consumer_secret'],
+            access_key:      @config['oauth']['access_key'],
+            access_secret:   @config['oauth']['access_secret'],
           }
         )
 
         stream.each_item do |item|
-          p MultiJson.decode(item)
-          #tweet = tweet_factory.create(item)
+          tweet = tweet_factory.create(item)
+          if tweet
+            @handlers.each do |handler|
+              handler.call tweet
+            end
+          end
         end
 
         stream.on_error do |message|
