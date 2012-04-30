@@ -1,7 +1,7 @@
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 $LOAD_PATH.unshift(File.dirname(__FILE__))
+require File.expand_path(File.dirname(__FILE__)) + '/../autoloader.rb'
 require 'rspec'
-require 'yuyat_bot'
 
 # Requires supporting files with custom matchers and macros, etc,
 # in ./support/ and its subdirectories.

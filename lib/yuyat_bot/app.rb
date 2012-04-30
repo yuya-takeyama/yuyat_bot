@@ -6,22 +6,24 @@ module YuyatBot
   class App
     def self.start(config)
       EventMachine::run {
+        tweet_factory = ::YuyatBot::TweetFactory.new(user_id: config['account']['user_id'].to_i)
+
         stream = Twitter::JSONStream.connect(
           host:    'userstream.twitter.com',
           path:    '/2/user.json',
           method:  'post',
           ssl:     true,
           oauth:   {
-            consumer_key:    config['twitter']['consumer_key'],
-            consumer_secret: config['twitter']['consumer_secret'],
-            access_key:      config['twitter']['access_key'],
-            access_secret:   config['twitter']['access_secret'],
+            consumer_key:    config['oauth']['consumer_key'],
+            consumer_secret: config['oauth']['consumer_secret'],
+            access_key:      config['oauth']['access_key'],
+            access_secret:   config['oauth']['access_secret'],
           }
         )
 
         stream.each_item do |item|
           p MultiJson.decode(item)
-          $stdout.flush
+          #tweet = tweet_factory.create(item)
         end
 
         stream.on_error do |message|
