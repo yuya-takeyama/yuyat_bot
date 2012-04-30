@@ -19,6 +19,7 @@ module YuyatBot
     end
 
     def configure
+      enable! ::YuyatBot::TweetHandler::WhatsTime
       enable! ::YuyatBot::TweetHandler::NothingToDo
     end
 
@@ -51,7 +52,11 @@ module YuyatBot
           tweet = tweet_factory.create(item)
           if tweet
             @handlers.each do |handler|
-              handler.call tweet
+              begin
+                handler.call tweet
+              rescue ::YuyatBot::StopTweetHandlerException
+                break
+              end
             end
           end
         end

@@ -21,7 +21,10 @@ class YuyatBot::TweetHandler::NothingToDo
   end
 
   def call(tweet)
-    reply_to tweet, message if tweet.for_me?
+    if tweet.for_me?
+      reply_to tweet, message
+      stop_tweet_handler
+    end
   end
 
   def message
