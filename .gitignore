@@ -1,3 +1,5 @@
+config/config.yml
+
 # rcov generated
 coverage
 coverage.data
