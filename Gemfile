@@ -3,6 +3,9 @@ source :rubygems
 gem "twitter"
 gem "twitter-stream"
 gem "multi_json"
+git "git://github.com/yuya-takeyama/markovchain.git" do
+  gem "markovchain"
+end
 
 group :development do
   gem "rspec", "~> 2.8.0"
