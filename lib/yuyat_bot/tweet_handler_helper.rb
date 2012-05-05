@@ -25,7 +25,11 @@ module YuyatBot::TweetHandlerHelper
   def reply_message_match(tweet, regexp, &block)
     if tweet.for_me?
       matches = remove_header_screen_names(tweet['text']).match regexp
-      yield matches.to_a[1..-1] if matches
+      if matches.respond_to? :size and matches.size == 2
+        yield matches[0]
+      elsif matches
+        yield matches.to_a[1..-1]
+      end
     end
   end
 
