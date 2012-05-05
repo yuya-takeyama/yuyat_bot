@@ -11,6 +11,9 @@ module YuyatBot::TweetHandlerHelper
 
   def tweet(status, options)
     @twitter.update(status, options)
+  rescue ::Twitter::Error => e
+    p e
+    puts status
   end
 
   def reply_to(tweet, status, options = {})
@@ -26,7 +29,7 @@ module YuyatBot::TweetHandlerHelper
     if tweet.for_me?
       matches = remove_header_screen_names(tweet['text']).match regexp
       if matches.respond_to? :size and matches.size == 2
-        yield matches[0]
+        yield matches[1]
       elsif matches
         yield matches.to_a[1..-1]
       end

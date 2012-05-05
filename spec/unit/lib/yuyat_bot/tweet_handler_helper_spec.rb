@@ -18,9 +18,9 @@ describe YuyatBot::TweetHandlerHelper do
 
     it 'should pass one String argument' do
       lambda {
-        tweet = ::YuyatBot::Tweet.new({"text" => "@yuyat_bot foo"}, :for_me => true)
-        reply_message_match tweet, /^(.*)$/ do |message|
-          message.should == "foo"
+        tweet = ::YuyatBot::Tweet.new({"text" => "@yuyat_bot foo bar"}, :for_me => true)
+        reply_message_match tweet, /^(?:[^\s]+) (.*)$/ do |message|
+          message.should == "bar"
           raise YuyatBot::CodeBlockEvaluatedException
         end
       }.should raise_error(::YuyatBot::CodeBlockEvaluatedException)
