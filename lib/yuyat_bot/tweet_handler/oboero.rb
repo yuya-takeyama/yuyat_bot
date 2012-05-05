@@ -18,8 +18,8 @@ class YuyatBot::TweetHandler::Oboero
   end
 
   def call(tweet)
-    reply_message_match tweet, /^(?:覚|憶|おぼ)え(?:て|ろ)(?:\s|　)(.*)$/ do |sequence|
-      @markov.seed sequence
+    reply_message_match tweet, /^(?:覚|憶|おぼ)え(?:て|ろ)(?:\s|　)+(.*)$/ do |sequence|
+      @markov.seed(remove_at_marks(sequence))
       reply_to tweet, "覚えた #{@markov.random_sequence}"
       stop_tweet_handler
     end
