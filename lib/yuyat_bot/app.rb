@@ -19,9 +19,9 @@ module YuyatBot
     end
 
     def configure
-      enable! ::YuyatBot::TweetHandler::WhatsTime
-      enable! ::YuyatBot::TweetHandler::Oboero
-      enable! ::YuyatBot::TweetHandler::NothingToDo
+      enable! TweetHandler::WhatsTime
+      enable! TweetHandler::Oboero
+      enable! TweetHandler::NothingToDo
     end
 
     def enable!(klass)
