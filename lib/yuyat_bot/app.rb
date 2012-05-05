@@ -26,7 +26,7 @@ module YuyatBot
       enable! TweetHandler::Oboero, {
         :mongo      => @mongo,
         :db         => @config['mongodb']['database'],
-        :collection => @config['oboero']['collection']
+        :collection => @config['oboero']['collection'],
       }
       enable! TweetHandler::NothingToDo
     end
