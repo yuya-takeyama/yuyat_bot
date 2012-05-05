@@ -6,13 +6,13 @@ require 'mongo'
 class YuyatBot::TweetHandler::Oboero
   include YuyatBot::TweetHandlerHelper
 
-  def initialize
+  def initialize(options = {})
     @markov = ::Markovchain.new(
       :state_size => 2,
       :storage    => Markovchain::Storage::MongoDb.new(
-        :mongo      => Mongo::Connection.new,
-        :db         => 'yuyat_bot',
-        :collection => 'markovchain_corpus',
+        :mongo      => options[:mongo],
+        :db         => options[:db],
+        :collection => options[:collection],
       )
     )
   end
