@@ -2,6 +2,7 @@
 require 'twitter'
 require 'twitter/json_stream'
 require 'multi_json'
+require 'mongo'
 
 module YuyatBot
   class App
@@ -16,16 +17,22 @@ module YuyatBot
         config.oauth_token_secret = @config['oauth']['access_secret']
       end
       @twitter = Twitter
+
+      @mongo = Mongo::Connection.new(@config['mongodb']['host'], @config['mongodb']['port'])
     end
 
     def configure
-      enable! ::YuyatBot::TweetHandler::WhatsTime
-      enable! ::YuyatBot::TweetHandler::Oboero
-      enable! ::YuyatBot::TweetHandler::NothingToDo
+      enable! TweetHandler::WhatsTime
+      enable! TweetHandler::Oboero, {
+        :mongo      => @mongo,
+        :db         => @config['mongodb']['database'],
+        :collection => @config['oboero']['collection']
+      }
+      enable! TweetHandler::NothingToDo
     end
 
-    def enable!(klass)
-      handler = klass.new
+    def enable!(klass, *options)
+      handler = klass.new(*options)
       handler.twitter = @twitter
       @handlers.push handler
     end
