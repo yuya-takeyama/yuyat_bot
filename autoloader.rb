@@ -4,6 +4,7 @@ module YuyatBot
   autoload :TweetFactory, 'yuyat_bot/tweet_factory'
   module TweetHandler
     autoload :NothingToDo, 'yuyat_bot/tweet_handler/nothing_to_do'
+    autoload :Oboero, 'yuyat_bot/tweet_handler/oboero'
     autoload :WhatsTime, 'yuyat_bot/tweet_handler/whats_time'
   end
   autoload :TweetHandler, 'yuyat_bot/tweet_handler'
