@@ -1,11 +1,20 @@
 # coding: utf-8
 require 'markovchain'
+require 'markovchain-storage-mongodb'
+require 'mongo'
 
 class YuyatBot::TweetHandler::Oboero
   include YuyatBot::TweetHandlerHelper
 
   def initialize
-    @markov = Markovchain.new 2
+    @markov = ::Markovchain.new(
+      :state_size => 2,
+      :storage    => Markovchain::Storage::MongoDb.new(
+        :mongo      => Mongo::Connection.new,
+        :db         => 'yuyat_bot',
+        :collection => 'markovchain_corpus',
+      )
+    )
   end
 
   def call(tweet)
