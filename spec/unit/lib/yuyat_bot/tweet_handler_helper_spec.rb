@@ -35,4 +35,18 @@ describe YuyatBot::TweetHandlerHelper do
       }.should_not raise_error(::YuyatBot::CodeBlockEvaluatedException)
     end
   end
+
+  describe '#remove_at_marks' do
+    subject { remove_at_marks(text) }
+
+    context 'when no @' do
+      let(:text) { 'foo bar baz' }
+      it { should == text }
+    end
+
+    context 'when screen_name with @ is included' do
+      let(:text) { '@foo bar baz' }
+      it { should == 'foo bar baz' }
+    end
+  end
 end

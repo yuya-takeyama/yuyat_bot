@@ -36,6 +36,10 @@ module YuyatBot::TweetHandlerHelper
     end
   end
 
+  def remove_at_marks(text)
+    text.gsub(/@([a-zA-Z0-9]+)/, "\\1")
+  end
+
   private
   def remove_header_screen_names(text)
     text.sub(/^(@[a-zA-Z1-9_]* *)/, '')
